@@ -38,7 +38,11 @@ const onshowSortList=ref(docsStore.docsCatalog)
 
 const handleSort=(item)=>{
   activeSortItem.value=item
-  onshowSortList.value=docsStore.docsCatalog.filter(e=>e.typeInfo.value===item.value)
+  if(item.value==='all'){
+    onshowSortList.value=docsStore.docsCatalog
+  }else {
+    onshowSortList.value=docsStore.docsCatalog.filter(e=>e.typeInfo.value===item.value)
+  }
 }
 
 </script>

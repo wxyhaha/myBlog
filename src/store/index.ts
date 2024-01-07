@@ -12,7 +12,7 @@ export const useDocsStore=defineStore('docsData',{
     },
     actions:{
         getDocsCatalog(){
-            const docsModule = import.meta.glob('/src/docs/*.md');
+            const docsModule = import.meta.glob('/src/assets/docs/*.md');
             const resArr=[]
             for (const path in docsModule) {
                 let infoArr= path.match(/\[(.*?)\]/g)
