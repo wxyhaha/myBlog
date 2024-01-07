@@ -3,14 +3,21 @@ import {createRouter,createWebHashHistory } from 'vue-router'
 export const routes = [
     {
         path: '/',
-        redirect: '/blog',
+        redirect: '/blogDetail',
     },
     {
         path: '/blog',
-        component: () => import('../page/BlogPage.vue'),
+        name:'blog',
+        component: () => import('../page/BlogList.vue'),
+    },
+    {
+        path: '/blogDetail',
+        name:'blogDetail',
+        component: () => import('../page/BlogDetail.vue'),
     },
     {
         path: '/other',
+        name:'other',
         component: () => import('../page/OtherPage.vue'),
     },
 ];

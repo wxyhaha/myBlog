@@ -2,16 +2,16 @@
   <div class="pageWrapper">
     <div class="pageContent">
       <div class="sideBar">
-        <div :class="{sideBarItem:true,activeSideBarItem:activeSortItem.value===item.value}" v-for="(item,index) in sideBarValue" :key="index" @click="handleSort(item)">
+        <div :class="{sideBarItem:true,activeSideBarItem:activeSortItem.value===item.value}" v-for="(item,index) in sortList" :key="index" @click="handleSort(item)">
           <i :class='item.icon'/>
           <span>{{ item.title }}</span>
         </div>
       </div>
       <div class="docListContent">
-        <div class="docItem" v-for="(item,index) in activeSortList" :key="index">
+        <div class="docItem" v-for="(item,index) in onshowSortList" :key="index" @click="router.push({name:'blogDetail',state:{path:item.fullPath}})">
           <div class="subInfo">
-            <i class='iconfont icon-js'/>
-            <span>JavaScript</span>
+            <i :class='item.typeInfo.icon'/>
+            <span>{{ item.typeInfo.title }}</span>
           </div>
           <div class="title">{{ item.title }}</div>
           <div class="subInfo">
@@ -26,25 +26,19 @@
 
 <script lang="ts" setup>
 import {ref} from "vue";
+import {useDocsStore} from "../store/index";
+import {sortList} from '../utils/index'
+import router from "../router/index";
 
-const sideBarValue=ref([
-  {title:'全部分类',icon:'iconfont icon-allSort',value:'all'},
-  {title:'JavaScript',icon:'iconfont icon-js',value:'js'},
-  {title:'HTML',icon:'iconfont icon-html',value:'html'},
-  {title:'CSS',icon:'iconfont icon-css',value:'css'},
-  {title:'Vue',icon:'iconfont icon-vue',value:'vue'},
-  {title:'React',icon:'iconfont icon-react',value:'react'},
-])
+const docsStore=useDocsStore()
 
-const activeSortItem=ref(sideBarValue.value[0])
+const activeSortItem=ref(sortList[0])
 
-const activeSortList=ref([
-  {title:'JavaScript数据类型判断方法',createTime:'2024-1-5 16:10:00'},
-  {title:'第二篇博客',createTime:'2024-1-6 12:15:00'}
-])
+const onshowSortList=ref(docsStore.docsCatalog)
 
 const handleSort=(item)=>{
   activeSortItem.value=item
+  onshowSortList.value=docsStore.docsCatalog.filter(e=>e.typeInfo.value===item.value)
 }
 
 </script>
@@ -105,6 +99,7 @@ const handleSort=(item)=>{
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  cursor: pointer;
 }
 .subInfo{
   font-size: 12px;

@@ -1,8 +1,8 @@
 <template>
   <div class="wrapper">
-    <div style="font-size: 28px">BLANK</div>
+    <div style="font-size: 28px">MOMENT</div>
     <div class="menuWrapper">
-      <div @click="router.push('/blog')" :class="{menuItem:true,activeItem:useRoute().path==='/blog'}">
+      <div @click="router.push('/blog')" :class="{menuItem:true,activeItem:useRoute().path==='/blog' || useRoute().path==='/blogDetail'}">
         <i class="iconfont icon-blog"/>
         <span>博客</span>
       </div>
@@ -17,8 +17,11 @@
 <script lang="ts" setup>
 import router from '../router';
 import {useRoute} from 'vue-router';
+import {useDocsStore} from "../store/index";
 
-console.log(useRoute().path)
+const docsStore=useDocsStore()
+
+docsStore.getDocsCatalog()
 
 </script>
 
