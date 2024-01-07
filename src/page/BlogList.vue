@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="docListContent">
-        <div class="docItem" v-for="(item,index) in onshowSortList" :key="index" @click="router.push({name:'blogDetail',state:{path:item.fullPath}})">
+        <div class="docItem" v-for="(item,index) in onshowSortList" :key="index" @click="handleShowDoc(item.fullPath)">
           <div class="subInfo">
             <i :class='item.typeInfo.icon'/>
             <span>{{ item.typeInfo.title }}</span>
@@ -35,6 +35,11 @@ const docsStore=useDocsStore()
 const activeSortItem=ref(sortList[0])
 
 const onshowSortList=ref(docsStore.docsCatalog)
+
+const handleShowDoc=(path)=>{
+  sessionStorage.setItem('selectedDocPath',path)
+  router.push({name:'blogDetail'})
+}
 
 const handleSort=(item)=>{
   activeSortItem.value=item

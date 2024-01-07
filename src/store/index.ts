@@ -4,7 +4,7 @@ import {sortList} from '../utils/index'
 export const useDocsStore=defineStore('docsData',{
     state:()=>{
         return {
-            docsCatalog:[]
+            docsCatalog:[],
         }
     },
     getters:{
@@ -12,7 +12,7 @@ export const useDocsStore=defineStore('docsData',{
     },
     actions:{
         getDocsCatalog(){
-            const docsModule = import.meta.glob('/src/assets/docs/*.md');
+            const docsModule = import.meta.glob('/public/docs/*.md');
             const resArr=[]
             for (const path in docsModule) {
                 let infoArr= path.match(/\[(.*?)\]/g)
@@ -23,7 +23,6 @@ export const useDocsStore=defineStore('docsData',{
             }
             this.$state.docsCatalog=resArr
         },
-
     }
 
 })

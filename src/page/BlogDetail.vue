@@ -14,13 +14,10 @@
 
 <script lang="ts" setup>
 import MarkdownIt from 'markdown-it'
-import {useDocsStore} from "../store/index";
-import router from "../router/index";
-import {routes} from "../router/index";
 
 const md = new MarkdownIt();
 
-fetch(history.state.path)
+fetch(sessionStorage.getItem('selectedDocPath').replace('/public',''))
     .then(response => response.text())
     .then(data => {
       const mdDom=document.getElementById('markdownContent')
