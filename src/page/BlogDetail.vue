@@ -14,15 +14,29 @@
 
 <script lang="ts" setup>
 import MarkdownIt from 'markdown-it'
+import {useRoute} from "vue-router";
+import {onMounted} from "vue";
+
+const router=useRoute()
 
 const md = new MarkdownIt();
 
-fetch(sessionStorage.getItem('selectedDocPath').replace('/public',''))
-    .then(response => response.text())
-    .then(data => {
-      const mdDom=document.getElementById('markdownContent')
-      mdDom.innerHTML=md.render(data)
-    });
+let docPath=''
+if (process.env.NODE_ENV === 'development') {
+  docPath=router.query.path
+} else {
+  docPath=router.query.path?.replace('/public','')
+}
+
+onMounted(()=>{
+  const mdDom=document.getElementById('markdownContent')
+  mdDom.innerHTML=''
+  fetch(docPath)
+      .then(response => response.text())
+      .then(data => {
+        mdDom.innerHTML=md.render(data)
+      });
+})
 
 </script>
 

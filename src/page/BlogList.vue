@@ -37,8 +37,7 @@ const activeSortItem=ref(sortList[0])
 const onshowSortList=ref(docsStore.docsCatalog)
 
 const handleShowDoc=(path)=>{
-  sessionStorage.setItem('selectedDocPath',path)
-  router.push({name:'blogDetail'})
+  router.push({path:'/blogDetail',query:{path:path}})
 }
 
 const handleSort=(item)=>{
